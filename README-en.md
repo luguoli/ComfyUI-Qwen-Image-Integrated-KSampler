@@ -5,6 +5,8 @@
 
 [English](README-en.md) | **[简体中文](README.md)**
 
+QwenImageIntegratedKSampler
+
 This is an integrated ComfyUI Qwen-Image image generation sampler node. Compared to using the official KSampler, it eliminates the messy wiring, supports both text-to-image and image-to-image generation, solves the offset issues of the official nodes, and integrates prompt input box, automatic image scaling, automatic memory/vRAM cleanup, batch generation, automatic saving and other comprehensive optimization features, so mom no longer has to worry about my messy wiring~~~~
 
 ## 🏆 Features
