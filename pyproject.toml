@@ -1,0 +1,15 @@
+[project]
+name = "comfyui-qwen-image-integrated-ksampler"
+description = "ComfyUI custom node for integrated Qwen image sampling, supporting text-to-image and image-to-image modes with advanced features like CFG normalization, AuraFlow shift, and memory management."
+version = "1.0.0"
+license = { file = "LICENSE" }
+dependencies = ["torch", "numpy>=1.25.0", "transformers>=4.37.2", "tokenizers>=0.13.3", "sentencepiece", "safetensors>=0.4.2", "einops", "Pillow", "psutil"]
+
+[project.urls]
+Repository = "https://github.com/luguoli/ComfyUI-Qwen-Image-Integrated-KSampler"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = "yolain"
+DisplayName = "ComfyUI-Qwen-Image-Integrated-KSampler"
+Icon = ""

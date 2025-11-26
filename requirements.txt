@@ -1,0 +1,9 @@
+torch
+numpy>=1.25.0
+transformers>=4.37.2
+tokenizers>=0.13.3
+sentencepiece
+safetensors>=0.4.2
+einops
+Pillow
+psutil

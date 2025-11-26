@@ -1,0 +1,159 @@
+{
+  "QwenImageIntegratedKSampler": {
+    "display_name": "🐋 千问图像集成采样器 - Github Search: luguoli",
+    "description": "🐋 千问图像集成采样器 - Github: https://github.com/luguoli - K采样器，智能多模态采样器，支持文生图/图生图双模式，优化官方偏移问题，更遵从指令，图片缩放、可处理多张参考图、自动显存/内存管理、批量生成、自动保存、声音通知、AuraFlow优化、CFG标准化调节等全方位功能，不需要连那么多线啦~~~~",
+    "inputs": {
+      "clip": {
+        "name": "🟡 Clip",
+        "tooltip": "🟡 Clip - CLIP模型，用于文本编码和条件生成"
+      },
+      "model": {
+        "name": "🤖 模型",
+        "tooltip": "🤖 Model - 扩散模型输入，用作图像生成的核心模型"
+      },
+      "positive_prompt": {
+        "name": "✅ 正向提示",
+        "tooltip": "✅ 正向提示 - 描述期望图像元索的文本提示"
+      },
+      "negative_prompt": {
+        "name": "❌ 负向提示",
+        "tooltip": "❌ 负向提示 - 描述要避免的图像元素的文本提示"
+      },
+      "seed": {
+        "name": "🎲 种子",
+        "tooltip": "🎲 生成噪波的随机种。"
+      },
+      "steps": {
+        "name": "📊 步数",
+        "tooltip": "📊 降噪的步数。"
+      },
+      "cfg": {
+        "name": "🎛️ cfg",
+        "tooltip": "🎛️ 用于平衡随机性和提示词服从性。提高该值会使结果更加符合提示词，但过高会导致图像质量下降。"
+      },
+      "sampler_name": {
+        "name": "🌀 采样器名称",
+        "tooltip": "🌀 采样算法，会影响结果质量、生成速度、风格样式。"
+      },
+      "scheduler": {
+        "name": "📈 调度器",
+        "tooltip": "📈 控制逐渐移除噪波的方法。"
+      },
+      "latent": {
+        "name": "🟣 Latent（可空）",
+        "tooltip": "🟣 Latent - 文生图、图生图（传入了主图）可不传，自动创建，如需使用ControlNet等可自行传入"
+      },
+      "vae": {
+        "name": "🎨 Vae",
+        "tooltip": "🎨 Vae - VAE模型输入，用于将潜空间解码为最终可见图像"
+      },
+      "denoise": {
+        "name": "🔄 降噪",
+        "tooltip": "🔄 降噪的强度，降低该值会保留原图的大部分内容从而实现图生图。"
+      },
+      "image1": {
+        "name": "🖼️ 图像1（主图）",
+        "tooltip": "🖼️ 图像1（主图） - 参考图像1（主图），用于条件生成和潜空间编码。如果不传入，则文生图。"
+      },
+      "image2": {
+        "name": "🖼️ 图像2",
+        "tooltip": "🖼️ 图像2 - 参考图像2，用于条件生成和潜空间编码"
+      },
+      "image3": {
+        "name": "🖼️ 图像3",
+        "tooltip": "🖼️ 图像3 - 参考图像3，用于条件生成和潜空间编码"
+      },
+      "image4": {
+        "name": "🖼️ 图像4",
+        "tooltip": "🖼️ 图像4 - 参考图像4，用于条件生成和潜空间编码"
+      },
+      "image5": {
+        "name": "🖼️ 图像5",
+        "tooltip": "🖼️ 图像5 - 参考图像5，用于条件生成和潜空间编码"
+      },
+      "instruction": {
+        "name": "📝 指令",
+        "tooltip": "📝 指令 - 系统指令，用于指导参考图像的图像编辑"
+      },
+      "auraflow_shift": {
+        "name": "⚡ 采样算法AuraFlow移位",
+        "tooltip": "⚡ 采样算法AuraFlow移位 - 采样算法（AuraFlow） 移位Shift参数，影响速度和质量 (0-100)"
+      },
+      "cfg_norm_strength": {
+        "name": "⚖️ CFGNorm 强度",
+        "tooltip": "⚖️ CFGNorm 强度 - CFG标准化强度，动态调整CFG指导强度 (0-100)"
+      },
+      "enable_clean_gpu_memory": {
+        "name": "🗑️ 清理显存占用",
+        "tooltip": "🗑️ 清理显存占用 - 在采样/解码前后清理显存占用，以释放资源给其他应用"
+      },
+      "enable_clean_cpu_memory_after_finish": {
+        "name": "🗑️ 完成后清理内存",
+        "tooltip": "🗑️ 完成后清理内存 - 生成完成后清理CPU内存"
+      },
+      "extra_options": {
+        "name": "⚙️ 额外设定",
+        "tooltip": "⚙️ 额外设定 - 包含AuraFlow和CFG标准化功能的额外设置连接"
+      },
+      "enable_sound_notification": {
+        "name": "🔊 完成后播放声音",
+        "tooltip": "🔊 完成后播放声音 - 解码完成后播放通知声音以提醒用户"
+      },
+      "image_scale_to_length": {
+        "name": "📏 图像缩放至长度(填0或宽高都不足则不缩放)",
+        "tooltip": "📏 图像缩放至长度(宽高都不足则不缩放) - 可选，填0不缩放，如果参考图像宽高其中之一超过该长度，则缩放至此长度作为长边，保持纵横比"
+      },
+      "auto_save_output_folder": {
+        "name": "📁 自动保存输出文件夹(留空不自动保存)",
+        "tooltip": "📁 自动保存输出文件夹(留空不自动保存) - 留空则不执行保存"
+      },
+      "output_filename_prefix": {
+        "name": "📝 输出文件名前缀",
+        "tooltip": "📝 输出文件名前缀 - 默认auto_save"
+      },
+      "generation_mode": {
+        "name": "🎨 生成模式",
+        "tooltip": "🎨 生成模式 - 选择文生图或图生图模式"
+      },
+      "batch_size": {
+        "name": "📦 批次数量",
+        "tooltip": "📦 批次数量 - 生成图像的数量"
+      },
+      "width": {
+        "name": "📐 宽度(文生图-必填，图生图-填写缩放/填0不缩放)",
+        "tooltip": "📐 宽度(文生图-必填，图生图-填写缩放/填0不缩放)"
+      },
+      "height": {
+        "name": "📏 高度(文生图-必填，图生图-填写缩放/填0不缩放)",
+        "tooltip": "📏 高度(文生图-必填，图生图-填写缩放/填0不缩放)"
+      }
+    },
+    "outputs": {
+      "LATENT": {
+        "name": "🟣 Latent",
+        "tooltip": "🟣 Latent - 生成的潜空间图像输出，可传递给解码器创建最终图像"
+      },
+      "image": {
+        "name": "🖼️ 生成图像",
+        "tooltip": "🖼️ 生成图像 - 解码的最终可见图像输出，准备保存或进一步处理"
+      },
+      "scaled_image": {
+        "name": "🖼️ 缩放后原图",
+        "tooltip": "🖼️ 缩放后原图 - 缩放后的原图输出，可用于进一步处理"
+      }
+    }
+  },
+  "EasyKSamplerExtraOptions": {
+    "display_name": "🎛️ Easy KSampler 额外设定",
+    "description": "🎛️ Easy KSampler 额外设定 - AuraFlow移位和CFG标准化强度的高级参数设置",
+    "inputs": {
+
+    },
+    "outputs": {
+      "EXTRA_OPTIONS": {
+        "name": "⚙️ 额外设定",
+        "tooltip": "⚙️ 额外设定 - 包含AuraFlow和CFG标准化设置的额外选项输出"
+      }
+    }
+  }
+}

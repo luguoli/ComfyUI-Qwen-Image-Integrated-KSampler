@@ -1,0 +1,159 @@
+{
+  "QwenImageIntegratedKSampler": {
+    "display_name": "🐋 Qwen Image Integrated KSampler - Github: luguoli",
+    "description": "🐋 Qwen Image Integrated KSampler - Github: https://github.com/luguoli - KSampler, intelligent multimodal sampler, supports text-to-image / image-to-image dual modes, optimizes official offset issues, better complies with instructions, image scaling, can process multiple reference images, automatic VRAM/RAM management, batch generation, automatic saving, sound notification, AuraFlow optimization, CFG normalization adjustment and other comprehensive functions, no need to connect so many wires~~~~",
+    "inputs": {
+      "clip": {
+        "name": "🟡 Clip",
+        "tooltip": "🟡 Clip - CLIP model for text encoding and conditioning"
+      },
+      "model": {
+        "name": "🤖 Model",
+        "tooltip": "🤖 Model - Diffusion model input used as the core model for image generation"
+      },
+      "positive_prompt": {
+        "name": "✅ Positive Prompt",
+        "tooltip": "✅ Positive Prompt - Text prompt describing desired image elements and features"
+      },
+      "negative_prompt": {
+        "name": "❌ Negative Prompt",
+        "tooltip": "❌ Negative Prompt - Text prompt describing unwanted image elements to avoid"
+      },
+      "seed": {
+        "name": "🎲 Seed",
+        "tooltip": "🎲 Seed - Random seed control, identical seeds generate identical image results"
+      },
+      "steps": {
+        "name": "📊 Steps",
+        "tooltip": "📊 Steps - Sampling steps, more steps usually produce better image quality but take more time"
+      },
+      "cfg": {
+        "name": "🎛️ CFG",
+        "tooltip": "🎛️ CFG - Classifier-Free Guidance scale controls prompt influence strength"
+      },
+      "sampler_name": {
+        "name": "🌀 Sampler",
+        "tooltip": "🌀 Sampler - Sampling algorithm type, affects generation speed and quality"
+      },
+      "scheduler": {
+        "name": "📈 Scheduler",
+        "tooltip": "📈 Scheduler - Noise scheduling method that controls how noise is gradually removed"
+      },
+      "latent": {
+        "name": "🟣 Latent",
+        "tooltip": "🟣 Latent - Latent space image input for img2img or inpainting tasks"
+      },
+      "vae": {
+        "name": "🎨 Vae",
+        "tooltip": "🎨 Vae - VAE model input used for decoding latent space to final visible images"
+      },
+      "denoise": {
+        "name": "🔄 Denoise",
+        "tooltip": "🔄 Denoise - Denoising strength control, 0-1 range, affects original image modification"
+      },
+      "image1": {
+        "name": "🖼️ Image1 (Main Image)",
+        "tooltip": "🖼️ Image1 (Main Image) - Reference image 1 (main image) for conditioning and latent generation. If not provided, text to image."
+      },
+      "image2": {
+        "name": "🖼️ Image2",
+        "tooltip": "🖼️ Image2 - Reference image 2 for conditioning and latent generation"
+      },
+      "image3": {
+        "name": "🖼️ Image3",
+        "tooltip": "🖼️ Image3 - Reference image 3 for conditioning and latent generation"
+      },
+      "image4": {
+        "name": "🖼️ Image4",
+        "tooltip": "🖼️ Image4 - Reference image 4 for conditioning and latent generation"
+      },
+      "image5": {
+        "name": "🖼️ Image5",
+        "tooltip": "🖼️ Image5 - Reference image 5 for conditioning and latent generation"
+      },
+      "instruction": {
+        "name": "📝 Instruction",
+        "tooltip": "📝 Instruction - System instruction for guiding image editing with reference images"
+      },
+      "auraflow_shift": {
+        "name": "⚡ ModelSamplingAuraFlow Shift",
+        "tooltip": "⚡ ModelSamplingAuraFlow Shift - AuraFlow model sampling shift parameter affecting speed and quality (0-100)"
+      },
+      "cfg_norm_strength": {
+        "name": "⚖️ CFGNorm Strength",
+        "tooltip": "⚖️ CFGNorm Strength - CFG Normalization strength, dynamically adjusts CFG guidance strength (0-100)"
+      },
+      "enable_clean_gpu_memory": {
+        "name": "🗑️ Clean GPU Memory",
+        "tooltip": "🗑️ Clean GPU Memory - Clean up GPU memory before and after sampling/decoding to free resources for other applications"
+      },
+      "enable_clean_cpu_memory_after_finish": {
+        "name": "🗑️ Clean CPU Memory After Finish",
+        "tooltip": "🗑️ Clean CPU Memory After Finish - Clean up CPU memory after generation is complete"
+      },
+      "extra_options": {
+        "name": "⚙️ Extra Options",
+        "tooltip": "⚙️ Extra Options - Optional advanced settings connection with AuraFlow and CFG normalization features"
+      },
+      "enable_sound_notification": {
+        "name": "🔊 Sound Notification",
+        "tooltip": "🔊 Sound Notification - Play notification sound after decoding completes to alert user"
+      },
+      "image_scale_to_length": {
+        "name": "📏 Image Scale to Length(No scale if 0)",
+        "tooltip": "📏 Image Scale to Length(No scale if both width & height smaller) - Optional, 0 for no scale, if the reference image width or height exceeds this length, scale to this length as the longest side, maintaining aspect ratio"
+      },
+      "auto_save_output_folder": {
+        "name": "📁 Auto Save Output Folder (Leave Empty for No Saving)",
+        "tooltip": "📁 Auto Save Output Folder (Leave Empty for No Saving) - Leave empty to skip saving"
+      },
+      "output_filename_prefix": {
+        "name": "📝 Output Filename Prefix",
+        "tooltip": "📝 Output Filename Prefix - Default auto_save"
+      },
+      "generation_mode": {
+        "name": "🎨 Generation Mode",
+        "tooltip": "🎨 Generation Mode - Choose between text to image or image to image mode"
+      },
+      "batch_size": {
+        "name": "📦 Batch Size",
+        "tooltip": "📦 Batch Size - Number of images to generate"
+      },
+      "width": {
+        "name": "📐 Width (Required for txt2img, fill for scaling in img2img / 0 for no scaling)",
+        "tooltip": "📐 Width (Required for txt2img, fill for scaling in img2img / 0 for no scaling)"
+      },
+      "height": {
+        "name": "📏 Height (Required for txt2img, fill for scaling in img2img / 0 for no scaling)",
+        "tooltip": "📏 Height (Required for txt2img, fill for scaling in img2img / 0 for no scaling)"
+      }
+    },
+    "outputs": {
+      "LATENT": {
+        "name": "🟣 Latent",
+        "tooltip": "🟣 Latent - Generated latent space image output, can be passed to decoder to create final image"
+      },
+      "image": {
+        "name": "🖼️ Image",
+        "tooltip": "🖼️ Image - Decoded final visible image output, ready for saving or further processing"
+      },
+      "scaled_image": {
+        "name": "🖼️ Scaled Image",
+        "tooltip": "🖼️ Scaled Image - Scaled original image output for further processing"
+      }
+    }
+  },
+  "EasyKSamplerExtraOptions": {
+    "display_name": "🎛️ Easy KSampler Extra Options",
+    "description": "🎛️ Easy KSampler Extra Options - Advanced parameter settings for AuraFlow shift and CFG normalization strength",
+    "inputs": {
+
+    },
+    "outputs": {
+      "EXTRA_OPTIONS": {
+        "name": "⚙️ Extra Options",
+        "tooltip": "⚙️ Extra Options - Extra options output containing AuraFlow and CFG normalization settings"
+      }
+    }
+  }
+}
