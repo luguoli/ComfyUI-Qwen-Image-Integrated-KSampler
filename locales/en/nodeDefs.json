@@ -1,7 +1,7 @@
 {
   "QwenImageIntegratedKSampler": {
-    "display_name": "🐋 Qwen Image Integrated KSampler - Github: luguoli",
-    "description": "🐋 Qwen Image Integrated KSampler - Github: https://github.com/luguoli - KSampler, intelligent multimodal sampler, supports text-to-image / image-to-image dual modes, optimizes official offset issues, better complies with instructions, image scaling, can process multiple reference images, automatic VRAM/RAM management, batch generation, automatic saving, sound notification, AuraFlow optimization, CFG normalization adjustment and other comprehensive functions, no need to connect so many wires~~~~",
+    "display_name": "🐋 Qwen Image Integrated KSampler - Github:﹫luguoli",
+    "description": "🐋 Qwen Image Integrated KSampler - Github: https://github.com/luguoli - KSampler, intelligent multimodal sampler, supports text-to-image / image-to-image dual modes, optimizes official offset issues, better complies with instructions, image scaling, can process multiple reference images, automatic VRAM/RAM management, batch generation, automatic saving, sound notification, AuraFlow optimization, CFG normalization adjustment and other comprehensive functions, no need to connect so many wires~~~~ - 📧Email: luguoli﹫vip.qq.com",
     "inputs": {
       "clip": {
         "name": "🟡 Clip",
