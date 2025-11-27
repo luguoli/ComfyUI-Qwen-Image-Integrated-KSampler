@@ -160,7 +160,7 @@
       }
     }
   },
-  "ControlNetIntegratedLoader": {
+  "QwenImageControlNetIntegratedLoader": {
     "display_name": "🐋 千问 ControlNet 集成加载器 - Github:﹫luguoli",
     "description": "🐋 千问 ControlNet 集成加载器 - Github: https://github.com/luguoli - 整合 加载ControlNet模型 和设置UnionControlNet类型，简化 ControlNet 使用 - 📧Email: luguoli﹫vip.qq.com",
     "inputs": {

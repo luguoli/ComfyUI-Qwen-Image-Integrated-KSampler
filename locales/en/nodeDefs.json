@@ -160,7 +160,7 @@
       }
     }
   },
-  "ControlNetIntegratedLoader": {
+  "QwenImageControlNetIntegratedLoader": {
     "display_name": "🐋 Qwen ControlNet Integrated Loader - Github:﹫luguoli",
     "description": "🐋 Qwen ControlNet Integrated Loader - Github: https://github.com/luguoli - Integrates ControlNetLoader and SetUnionControlNetType, simplifies ControlNet usage, automatically handles type settings and data preparation - 📧Email: luguoli﹫vip.qq.com",
     "inputs": {

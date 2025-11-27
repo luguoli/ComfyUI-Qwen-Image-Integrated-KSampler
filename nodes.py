@@ -382,7 +382,7 @@ class ExtraOptions:
         }
         return (options,)
 
-class ControlNetIntegratedLoader:
+class QwenImageControlNetIntegratedLoader:
     @classmethod
     def INPUT_TYPES(s):
         type_options = ["auto"] + list(UNION_CONTROLNET_TYPES.keys())
@@ -437,10 +437,10 @@ class ControlNetIntegratedLoader:
 
 NODE_CLASS_MAPPINGS = {
     "QwenImageIntegratedKSampler": QwenImageIntegratedKSampler,
-    "ControlNetIntegratedLoader": ControlNetIntegratedLoader,
+    "QwenImageControlNetIntegratedLoader": QwenImageControlNetIntegratedLoader,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "QwenImageIntegratedKSampler": "🐋 千问图像集成采样器——Github:@luguoli",
-    "ControlNetIntegratedLoader": "🐋 千问ControlNet集成加载器——Github:@luguoli",
+    "QwenImageControlNetIntegratedLoader": "🐋 千问ControlNet集成加载器——Github:@luguoli",
 }
