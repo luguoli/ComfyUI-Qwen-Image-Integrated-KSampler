@@ -1,6 +1,10 @@
 import torch
 import comfy.samplers
 import comfy.model_management
+import comfy.controlnet
+import comfy.cldm.control_types
+from comfy.cldm.control_types import UNION_CONTROLNET_TYPES
+import folder_paths
 from .cache import remove_cache
 import numpy as np
 from PIL import Image
@@ -41,6 +45,7 @@ class QwenImageIntegratedKSampler:
                 "image4": ("IMAGE", ),
                 "image5": ("IMAGE", ),
                 "latent": ("LATENT", {}),
+                "controlnet_data": ("CONTROL_NET_DATA", ),
                 "auraflow_shift": ("FLOAT", {"default": 3.0, "min": 0.0, "max": 100.0, "step": 0.01}),
                 "cfg_norm_strength": ("FLOAT", {"default": 1, "min": 0.0, "max": 100.0, "step": 0.01}),
                 "enable_clean_gpu_memory": ("BOOLEAN", {"default": False}),
@@ -53,7 +58,7 @@ class QwenImageIntegratedKSampler:
         }
 
     RETURN_TYPES = ("IMAGE", "LATENT", "IMAGE")
-    RETURN_NAMES = ("生成图像Image", "Latent", "缩放后原图Scaled Image")
+    RETURN_NAMES = ("生成图像Image", "（可选）Latent", "缩放后原图Scaled Image")
     FUNCTION = "sample"
     CATEGORY = "sampling"
     # 注意语言文件中不能用@符号
@@ -63,7 +68,7 @@ class QwenImageIntegratedKSampler:
     
 
 
-    def sample(self, model, clip, vae, positive_prompt, negative_prompt, generation_mode, batch_size, width, height, seed, steps, cfg, sampler_name, scheduler, denoise=1.0, image1=None, image2=None, image3=None, image4=None, image5=None, latent=None, auraflow_shift=0, cfg_norm_strength=0, enable_clean_gpu_memory=False, enable_clean_cpu_memory_after_finish=False, enable_sound_notification=False, instruction="", auto_save_output_folder="", output_filename_prefix="auto_save"):
+    def sample(self, model, clip, vae, positive_prompt, negative_prompt, generation_mode, batch_size, width, height, seed, steps, cfg, sampler_name, scheduler, denoise=1.0, image1=None, image2=None, image3=None, image4=None, image5=None, latent=None, controlnet_data=None, auraflow_shift=0, cfg_norm_strength=0, enable_clean_gpu_memory=False, enable_clean_cpu_memory_after_finish=False, enable_sound_notification=False, instruction="", auto_save_output_folder="", output_filename_prefix="auto_save"):
 
 
         # Print start execution information
@@ -143,7 +148,7 @@ class QwenImageIntegratedKSampler:
                             scaled_image, _, _, _, _ = image_scale_by_aspect_ratio('original', 1, 1, 'letterbox', 'lanczos', '8', 'max_size', (width, height), '#000000', img, None)
                             images_scaled[i] = scaled_image
                         # except Exception as e:
-                        #     log(f"⚠️ [Image Scale] Cannot scale image {i+1} with shape {img.shape}: {e}")
+                        #  log(f"⚠️ [Image Scale] Cannot scale image {i+1} with shape {img.shape}: {e}")
                         #     images_scaled[i] = img
                     # else: None
 
@@ -153,14 +158,94 @@ class QwenImageIntegratedKSampler:
 
             image_prompt, images_vl, llama_template, ref_latents = get_image_prompt(vae, image1_scaled, image2_scaled, image3_scaled, image4_scaled, image5_scaled, upscale_method="lanczos", crop="disabled", instruction=instruction)
 
+            print("⏳ [Prompt] 正在生成正向条件 / Generating positive condition...")
             positive = prompt_encode(clip, positive_prompt, image_prompt=image_prompt, images_vl=images_vl, llama_template=llama_template, ref_latents=ref_latents)
+            print("⏳ [Prompt] 正在生成负向条件 / Generating negative condition...")
             negative = prompt_encode(clip, negative_prompt, image_prompt=image_prompt, images_vl=images_vl, llama_template=llama_template, ref_latents=ref_latents)
+            print("✅ [Prompt] 提示词条件生成完成 / Prompt generated successfully")
+
+
         else:
             if width > 0 and height > 0:
                 positive = prompt_encode(clip, positive_prompt)
                 negative = prompt_encode(clip, negative_prompt)
             else:
                 raise Exception("文生图必须输入宽高。text-to-image width and height must be entered.")
+
+        # Apply ControlNet if provided
+        if controlnet_data is not None:
+            try:
+                control_net = controlnet_data["control_net"]
+                control_type = controlnet_data["control_type"]
+                control_image = controlnet_data["image"]
+                control_mask = controlnet_data["mask"]
+                control_strength = controlnet_data["strength"]
+                control_start_percent = controlnet_data["start_percent"]
+                control_end_percent = controlnet_data["end_percent"]
+
+                print(f"🎨 应用ControlNet/Applying ControlNet with strength: {control_strength}")
+
+                if control_strength > 0:
+
+                    if control_image is None:
+                        raise Exception("使用ControlNet必须传入控制图像。ControlNet must enter control image.")
+                    
+                    extra_concat=[]
+
+                    # if control_type.lower() == "repaint" or control_type.lower() == "inpaint" or control_type.lower() == "inpainting" or control_type == "重绘" or control_type == "局部重绘":
+                    #     if control_mask is None:
+                    #         raise Exception("使用局部重绘ControlNet必须传入控制遮罩。ControlNet repaint must enter control mask.")
+                    
+                    # 复刻阿里妈妈局部重绘功能未能实现，会报错
+                    # 图生图-局部重绘 时使用缩放主图
+                    # if generation_mode == "图生图 image-to-image":
+                    #     if control_type.lower() == "repaint" or control_type.lower() == "inpaint" or control_type.lower() == "inpainting" or control_type == "重绘" or control_type == "局部重绘":
+                            
+                    #         if width > 0 and height > 0:
+                    #             scaled_control_image, scaled_control_mask, _, _, _ = image_scale_by_aspect_ratio('original', 1, 1, 'letterbox', 'lanczos', '8', 'max_size', (width, height), '#000000', control_image, control_mask)
+                    #             control_image = scaled_control_image
+                    #             control_mask = scaled_control_mask
+
+                    # if control_mask is not None:
+                    #     control_mask = 1.0 - control_mask.reshape((-1, 1, control_mask.shape[-2], control_mask.shape[-1]))
+                    #     control_mask_apply = comfy.utils.common_upscale(control_mask, control_image.shape[2], control_image.shape[1], "bilinear", "center").round()
+                    #     control_image = control_image * control_mask_apply.movedim(1, -1).repeat(1, 1, 1, control_image.shape[3])
+                    #     extra_concat = [control_mask]
+                    #     print("✅ ControlNet 应用遮罩/ControlNet applied mask")
+
+                    control_hint = control_image.movedim(-1,1)
+                    cnets = {}
+
+                    out = []
+                    for conditioning in [positive, negative]:
+                        c = []
+                        for t in conditioning:
+                            d = t[1].copy()
+
+                            prev_cnet = d.get('control', None)
+                            if prev_cnet in cnets:
+                                c_net = cnets[prev_cnet]
+                            else:
+                                c_net = control_net.copy().set_cond_hint(control_hint, control_strength, (control_start_percent, control_end_percent), vae=vae, extra_concat=extra_concat)
+                                c_net.set_previous_controlnet(prev_cnet)
+                                cnets[prev_cnet] = c_net
+
+                            d['control'] = c_net
+                            d['control_apply_to_uncond'] = False
+                            n = [t[0], d]
+                            c.append(n)
+                        out.append(c)
+
+                    positive = out[0]
+                    negative = out[1]
+                    
+                    print("✅ ControlNet 应用成功/ControlNet applied successfully")
+                else:
+                    print("⚠️ ControlNet强度设置为0，不应用ControlNet/No ControlNet applied")
+            except Exception as e:
+                raise Exception(f"⚠️ [ControlNet] ControlNet 应用失败 / Cannot apply ControlNet: {e}")
+
+
 
         if latent is None:
             if image1_scaled is not None:
@@ -297,10 +382,65 @@ class ExtraOptions:
         }
         return (options,)
 
+class ControlNetIntegratedLoader:
+    @classmethod
+    def INPUT_TYPES(s):
+        type_options = ["auto"] + list(UNION_CONTROLNET_TYPES.keys())
+        return {
+            "required": {
+                "image": ("IMAGE", ),
+                "control_net_name": (folder_paths.get_filename_list("controlnet"), ),
+                "control_type": (type_options, {"default": "auto"}),
+                "strength": ("FLOAT", {"default": 2.0, "min": 0.0, "max": 10.0, "step": 0.01}),
+                "start_percent": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 1.0, "step": 0.001}),
+                "end_percent": ("FLOAT", {"default": 0.5, "min": 0.0, "max": 1.0, "step": 0.001}),
+            },
+            # "optional": {
+            #     "mask": ("MASK", ),
+            # }
+        }
+
+    RETURN_TYPES = ("CONTROL_NET_DATA",)
+    RETURN_NAMES = ("ControlNet 数据/ControlNet Data",)
+    FUNCTION = "load_controlnet"
+    CATEGORY = "conditioning/controlnet"
+    DESCRIPTION = "🐋 千问 ControlNet 集成加载器 - 需要 ControlNet 时使用/🐋 Qwen ControlNet Integrated Loader"
+
+    def load_controlnet(self, image, control_net_name, control_type, strength, start_percent, end_percent, mask=None):
+
+        # 加载 ControlNet
+        controlnet = comfy.controlnet.load_controlnet(folder_paths.get_full_path_or_raise("controlnet", control_net_name))
+
+        if controlnet is None:
+            raise RuntimeError("ERROR: 错误的控制器 / controlnet file is invalid and does not contain a valid controlnet model.")
+
+        # 设置控制类型
+        controlnet = controlnet.copy()
+        type_number = UNION_CONTROLNET_TYPES.get(control_type, -1)
+        if type_number >= 0:
+            controlnet.set_extra_arg("control_type", [type_number])
+        else:
+            controlnet.set_extra_arg("control_type", [])
+
+        # 创建数据对象
+        control_net_data = {
+            "control_net": controlnet,
+            "control_type": control_type,
+            "image": image,
+            "mask": mask,
+            "strength": strength,
+            "start_percent": start_percent,
+            "end_percent": end_percent
+        }
+
+        return (control_net_data,)
+
 NODE_CLASS_MAPPINGS = {
     "QwenImageIntegratedKSampler": QwenImageIntegratedKSampler,
+    "ControlNetIntegratedLoader": ControlNetIntegratedLoader,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "QwenImageIntegratedKSampler": "🐋 千问图像集成采样器——Github:@luguoli",
+    "ControlNetIntegratedLoader": "🐋 千问ControlNet集成加载器——Github:@luguoli",
 }

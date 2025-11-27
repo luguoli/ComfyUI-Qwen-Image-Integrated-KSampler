@@ -43,6 +43,10 @@
         "name": "🟣 Latent（可空）",
         "tooltip": "🟣 Latent - 文生图、图生图（传入了主图）可不传，自动创建，如需使用ControlNet等可自行传入"
       },
+      "controlnet_data": {
+        "name": "🌿 ControlNet 数据（可选）",
+        "tooltip": "🌿 ControlNet 数据（可选） - 输入 ControlNet 集成加载器输出的数据包，直接应用 ControlNet 控制"
+      },
       "vae": {
         "name": "🎨 Vae",
         "tooltip": "🎨 Vae - VAE模型输入，用于将潜空间解码为最终可见图像"
@@ -153,6 +157,46 @@
       "EXTRA_OPTIONS": {
         "name": "⚙️ 额外设定",
         "tooltip": "⚙️ 额外设定 - 包含AuraFlow和CFG标准化设置的额外选项输出"
+      }
+    }
+  },
+  "ControlNetIntegratedLoader": {
+    "display_name": "🐋 千问 ControlNet 集成加载器 - Github:﹫luguoli",
+    "description": "🐋 千问 ControlNet 集成加载器 - Github: https://github.com/luguoli - 整合 加载ControlNet模型 和设置UnionControlNet类型，简化 ControlNet 使用 - 📧Email: luguoli﹫vip.qq.com",
+    "inputs": {
+      "image": {
+        "name": "🖼️ 控制图像",
+        "tooltip": "🖼️ 控制图像 - ControlNet 控制图像输入"
+      },
+      "mask": {
+        "name": "🎭 遮罩（可选）",
+        "tooltip": "🎭 遮罩（可选） - Inpainting 遮罩，用于 ControlNet 区域控制"
+      },
+      "control_net_name": {
+        "name": "🔧 ControlNet 模型",
+        "tooltip": "🔧 ControlNet 模型 - 选择要使用的 ControlNet 模型"
+      },
+      "control_type": {
+        "name": "🎨 控制类型",
+        "tooltip": "🎨 控制类型 - ControlNet 的具体控制类型，如姿态、 边缘检测、深度等"
+      },
+      "strength": {
+        "name": "💪 控制强度",
+        "tooltip": "💪 控制强度 - ControlNet 对生成结果的影响强度"
+      },
+      "start_percent": {
+        "name": "🏁 控制步数开始百分比",
+        "tooltip": "🏁 控制步数开始百分比 - ControlNet 效果开始应用的步数百分比"
+      },
+      "end_percent": {
+        "name": "🎯 控制步数结束百分比",
+        "tooltip": "🎯 控制步数结束百分比 - ControlNet 效果结束应用的步数百分比"
+      }
+    },
+    "outputs": {
+      "control_net_data": {
+        "name": "📦 ControlNet 数据",
+        "tooltip": "📦 ControlNet 数据包"
       }
     }
   }

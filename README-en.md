@@ -25,6 +25,8 @@ This is an integrated ComfyUI Qwen-Image image generation sampler node. Compared
 - **Multiple Reference Images**: Supports up to 5 reference images for conditional generation
 - **Automatic Image Scaling**: Maintains aspect ratio while resizing to target dimensions
 
+- **Support ControlNet Control**: Additional connection to [🐋 Qwen ControlNet Integrated Loader] for pose, depth and other controls
+
 ### 🔧 Productivity Enhancement
 - **Batch Generation**: Generate multiple images in a single operation
 - **Automatic VRAM Cleanup**: Automatic cleanup options for GPU/VRAM memory
@@ -72,6 +74,8 @@ This is an integrated ComfyUI Qwen-Image image generation sampler node. Compared
 
 ## 🚀 Usage Method
 
+### [Workflow Example](workflow_example.json)
+
 ### Basic Text-to-Image Generation
 
 1. Add the "🐋 Qwen Image Integrated KSampler" node to the workflow
@@ -95,6 +99,18 @@ This is an integrated ComfyUI Qwen-Image image generation sampler node. Compared
 6. Set target width/height for scaling (optional)
 7. Configure other parameters as needed
 8. Execute the workflow
+
+### ControlNet Control
+
+1. Add the [🐋 Qwen ControlNet Integrated Loader] node, connect to [📦 ControlNet Data]
+
+2. Connect pose, depth control images
+
+3. Select ControlNet model, set control type and strength
+
+4. Execute the workflow
+
+![alt text](images/3-en.png)
 
 ### Advanced Features
 

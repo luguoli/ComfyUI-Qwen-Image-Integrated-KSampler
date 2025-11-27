@@ -24,6 +24,7 @@ QwenImageIntegratedKSampler
 - **提示词输入框集成**: 集成了提示词输入框，无需另外连线
 - **多张参考图像**: 支持最多5张参考图像进行条件生成
 - **自动图像缩放**: 在调整到目标尺寸的同时保持纵横比
+- **支持ControlNet控制**: 可额外连接[千问 ControlNet 集成加载器]进行姿态、深度等控制
 
 ### 🔧 提高生产力
 - **批量生成**: 在单次操作中生成多张图像
@@ -74,6 +75,9 @@ QwenImageIntegratedKSampler
 
 ## 🚀 使用方法
 
+### [工作流示例](workflow_example.json)
+
+
 ### 基础文生图生成
 
 1. 将"🐋 千问图像集成采样器"节点添加到工作流中
@@ -97,6 +101,15 @@ QwenImageIntegratedKSampler
 6. 设置目标宽度/高度用于缩放（可选）
 7. 根据需要配置其他参数
 8. 执行工作流
+
+### ControlNet 控制
+
+1. 添加[千问 ControlNet 集成加载器]节点，连线至[ControlNet 数据]
+2. 连接姿态、深度控制图
+3. 选择ControlNet模型，设置控制类型和强度
+4. 执行工作流
+![alt text](images/3.png)
+
 
 ### 高级功能
 

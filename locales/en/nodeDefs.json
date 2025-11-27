@@ -43,6 +43,10 @@
         "name": "🟣 Latent",
         "tooltip": "🟣 Latent - Latent space image input for img2img or inpainting tasks"
       },
+      "controlnet_data": {
+        "name": "🌿 ControlNet Data (Optional)",
+        "tooltip": "🌿 ControlNet Data (Optional) - Input ControlNet integrated loader output data package to directly apply ControlNet control"
+      },
       "vae": {
         "name": "🎨 Vae",
         "tooltip": "🎨 Vae - VAE model input used for decoding latent space to final visible images"
@@ -152,7 +156,47 @@
     "outputs": {
       "EXTRA_OPTIONS": {
         "name": "⚙️ Extra Options",
-        "tooltip": "⚙️ Extra Options - Extra options output containing AuraFlow and CFG normalization settings"
+        "tooltip": "⚙️ Extra options output containing AuraFlow and CFG normalization settings"
+      }
+    }
+  },
+  "ControlNetIntegratedLoader": {
+    "display_name": "🐋 Qwen ControlNet Integrated Loader - Github:﹫luguoli",
+    "description": "🐋 Qwen ControlNet Integrated Loader - Github: https://github.com/luguoli - Integrates ControlNetLoader and SetUnionControlNetType, simplifies ControlNet usage, automatically handles type settings and data preparation - 📧Email: luguoli﹫vip.qq.com",
+    "inputs": {
+      "image": {
+        "name": "🖼️ Control Image",
+        "tooltip": "🖼️ Control Image - ControlNet control image input"
+      },
+      "mask": {
+        "name": "🎭 Mask (Optional)",
+        "tooltip": "🎭 Mask (Optional) - Inpainting mask for ControlNet regional control"
+      },
+      "control_net_name": {
+        "name": "🔧 ControlNet Model",
+        "tooltip": "🔧 ControlNet Model - Select the ControlNet model to use"
+      },
+      "control_type": {
+        "name": "🎨 Control Type",
+        "tooltip": "🎨 Control Type - Specific ControlNet control type such as edge pose ,detection, depth, etc."
+      },
+      "strength": {
+        "name": "💪 Control Strength",
+        "tooltip": "💪 Control Strength - How strongly ControlNet influences the generation results"
+      },
+      "start_percent": {
+        "name": "🏁 Control Steps Start Percent",
+        "tooltip": "🏁 Control Steps Start Percent - Percentage of steps where ControlNet effect starts to apply"
+      },
+      "end_percent": {
+        "name": "🎯 Control Steps End Percent",
+        "tooltip": "🎯 Control Steps End Percent - Percentage of steps where ControlNet effect ends"
+      }
+    },
+    "outputs": {
+      "control_net_data": {
+        "name": "📦 ControlNet Data",
+        "tooltip": "📦 ControlNet Data"
       }
     }
   }
