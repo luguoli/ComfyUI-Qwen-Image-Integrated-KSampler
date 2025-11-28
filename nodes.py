@@ -192,26 +192,25 @@ class QwenImageIntegratedKSampler:
                     
                     extra_concat=[]
 
-                    # if control_type.lower() == "repaint" or control_type.lower() == "inpaint" or control_type.lower() == "inpainting" or control_type == "重绘" or control_type == "局部重绘":
-                    #     if control_mask is None:
-                    #         raise Exception("使用局部重绘ControlNet必须传入控制遮罩。ControlNet repaint must enter control mask.")
+                    if control_type.lower() == "repaint" or control_type.lower() == "inpaint" or control_type.lower() == "inpainting" or control_type == "重绘" or control_type == "局部重绘":
+                        if control_mask is None:
+                            raise Exception("使用局部重绘ControlNet必须传入控制遮罩。ControlNet repaint must enter control mask.")
                     
-                    # 复刻阿里妈妈局部重绘功能未能实现，会报错
                     # 图生图-局部重绘 时使用缩放主图
-                    # if generation_mode == "图生图 image-to-image":
-                    #     if control_type.lower() == "repaint" or control_type.lower() == "inpaint" or control_type.lower() == "inpainting" or control_type == "重绘" or control_type == "局部重绘":
+                    if generation_mode == "图生图 image-to-image":
+                        if control_type.lower() == "repaint" or control_type.lower() == "inpaint" or control_type.lower() == "inpainting" or control_type == "重绘" or control_type == "局部重绘":
                             
-                    #         if width > 0 and height > 0:
-                    #             scaled_control_image, scaled_control_mask, _, _, _ = image_scale_by_aspect_ratio('original', 1, 1, 'letterbox', 'lanczos', '8', 'max_size', (width, height), '#000000', control_image, control_mask)
-                    #             control_image = scaled_control_image
-                    #             control_mask = scaled_control_mask
+                            if width > 0 and height > 0:
+                                scaled_control_image, scaled_control_mask, _, _, _ = image_scale_by_aspect_ratio('original', 1, 1, 'letterbox', 'lanczos', '8', 'max_size', (width, height), '#000000', control_image, control_mask)
+                                control_image = scaled_control_image
+                                control_mask = scaled_control_mask
 
-                    # if control_mask is not None:
-                    #     control_mask = 1.0 - control_mask.reshape((-1, 1, control_mask.shape[-2], control_mask.shape[-1]))
-                    #     control_mask_apply = comfy.utils.common_upscale(control_mask, control_image.shape[2], control_image.shape[1], "bilinear", "center").round()
-                    #     control_image = control_image * control_mask_apply.movedim(1, -1).repeat(1, 1, 1, control_image.shape[3])
-                    #     extra_concat = [control_mask]
-                    #     print("✅ ControlNet 应用遮罩/ControlNet applied mask")
+                    if control_net.concat_mask and control_mask is not None:
+                        control_mask = 1.0 - control_mask.reshape((-1, 1, control_mask.shape[-2], control_mask.shape[-1]))
+                        control_mask_apply = comfy.utils.common_upscale(control_mask, control_image.shape[2], control_image.shape[1], "bilinear", "center").round()
+                        control_image = control_image * control_mask_apply.movedim(1, -1).repeat(1, 1, 1, control_image.shape[3])
+                        extra_concat = [control_mask]
+                        print("✅ ControlNet 应用遮罩/ControlNet applied mask")
 
                     control_hint = control_image.movedim(-1,1)
                     cnets = {}
@@ -395,9 +394,9 @@ class QwenImageControlNetIntegratedLoader:
                 "start_percent": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 1.0, "step": 0.001}),
                 "end_percent": ("FLOAT", {"default": 0.5, "min": 0.0, "max": 1.0, "step": 0.001}),
             },
-            # "optional": {
-            #     "mask": ("MASK", ),
-            # }
+            "optional": {
+                "mask": ("MASK", ),
+            }
         }
 
     RETURN_TYPES = ("CONTROL_NET_DATA",)
