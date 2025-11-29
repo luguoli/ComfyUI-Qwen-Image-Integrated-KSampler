@@ -66,6 +66,8 @@ QwenImageIntegratedKSampler
 2. 克隆仓库：
    ```bash
    git clone https://github.com/luguoli/ComfyUI-Qwen-Image-Integrated-KSampler.git
+   或 Gitee 仓库：
+   git clone https://gitee.com/luguoli/ComfyUI-Qwen-Image-Integrated-KSampler.git
    ```
 
 3. 安装依赖项：

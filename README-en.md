@@ -65,6 +65,8 @@ This is an integrated ComfyUI Qwen-Image image generation sampler node. Compared
 2. Clone the repository:
    ```bash
    git clone https://github.com/luguoli/ComfyUI-Qwen-Image-Integrated-KSampler.git
+   or gitee repository:
+   git clone https://gitee.com/luguoli/ComfyUI-Qwen-Image-Integrated-KSampler.git
    ```
 
 3. Install dependencies:
