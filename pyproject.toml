@@ -1,5 +1,5 @@
 [project]
-name = "ComfyUI-Qwen-Image-Integrated-KSampler"
+name = "qwen-image-integrated-ksampler"
 description = "Qwen Image Integrated KSampler - Github: https://github.com/luguoli - ComfyUI custom node for integrated Qwen image sampling, supporting text-to-image and image-to-image modes with advanced features like CFG normalization, AuraFlow shift, and memory management."
 version = "1.0.5"
 license = {file = "LICENSE"} 
