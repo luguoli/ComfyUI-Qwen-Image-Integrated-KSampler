@@ -329,8 +329,8 @@ class QwenImageIntegratedKSampler:
             try:
                 import winsound
                 import time
-                # 播放快速紧凑的旋律：A4, C5, E5, G5，较短间隔使旋律连贯
-                frequencies = [440, 523, 659, 784]
+                # 播放快速紧凑的旋律：A4, C5, E5, G5, E5, G5，较短间隔使旋律连贯
+                frequencies = [440, 523, 659, 784, 659, 784]
                 for freq in frequencies:
                     winsound.Beep(freq, 150)
                     time.sleep(0.005)  # 更短间隔加快节奏

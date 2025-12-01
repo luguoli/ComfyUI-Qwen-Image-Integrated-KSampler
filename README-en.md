@@ -7,13 +7,14 @@
 
 QwenImageIntegratedKSampler
 
-This is an integrated ComfyUI Qwen-Image image generation sampler node. Compared to using the official KSampler, it eliminates the messy wiring, supports both text-to-image and image-to-image generation, solves the offset issues of the official nodes, and integrates prompt input box, automatic image scaling, automatic memory/vRAM cleanup, batch generation, automatic saving and other comprehensive optimization features, so mom no longer has to worry about my messy wiring~~~~
+This is an integrated ComfyUI Qwen-Image image generation sampler node,support Z-Image. Compared to using the official KSampler, it eliminates the messy wiring, supports both text-to-image and image-to-image generation, solves the offset issues of the official nodes, and integrates prompt input box, automatic image scaling, automatic memory/vRAM cleanup, batch generation, automatic saving and other comprehensive optimization features, so mom no longer has to worry about my messy wiring~~~~
 
 #### If this project helps you, please give it a ⭐Star — it lets me know there are humans out there using it!
 
 ## 🏆 Features
 
 ### 🎨 Supported Generation Modes
+- **Z-Image**: Support Z-Image Model
 - **Text-to-Image**: Generate images from text prompts
 - **Image-to-Image**: Generate based on reference images, image editing, supports up to 5 images
 
