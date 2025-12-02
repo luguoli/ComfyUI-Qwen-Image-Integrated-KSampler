@@ -162,6 +162,11 @@ QwenImageIntegratedKSampler
 - 作者邮箱：luguoli@vip.qq.com
 
 
+## 📝 更新记录
+### v1.0.6：
+- **增加汉化脚本：** ComfyUI从v0.3.68开始中文语言文件失效，增加自动汉化脚本，双击执行【自动汉化节点.bat】后重启ComfyUI即可，需要安装ComfyUI-DD-Translation插件
+
+
 ---
 
 **用❤️为ComfyUI社区制作**
