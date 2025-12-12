@@ -162,9 +162,11 @@ This is an integrated ComfyUI Qwen-Image image generation sampler node,support Z
 ### v1.0.6:
 - **Added Localization Script:** Starting from ComfyUI v0.3.68, Chinese language files became invalid. Added automatic localization script, double-click [自动汉化节点.bat] and restart ComfyUI, requires installing ComfyUI-DD-Translation plugin
 
-### 📞 Contact for Special Customization 📞
+
+## 📞 Contact for Special Customization 📞
 - Author: @luguoli（墙上的向日葵）
 - Author Email: luguoli@vip.qq.com
+
 
 ---
 

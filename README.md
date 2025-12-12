@@ -1,172 +1,173 @@
-# 🐋 ComfyUI 千问图像集成采样器（Qwen Image Integrated KSampler）
+# 🐋 Qwen Image Integrated KSampler
 
 [![GitHub](https://img.shields.io/badge/GitHub-luguoli-orange)](https://github.com/luguoli)
-[![ComfyUI](https://img.shields.io/badge/ComfyUI-自定义节点-blue)](https://github.com/comfyanonymous/ComfyUI)
+[![ComfyUI](https://img.shields.io/badge/ComfyUI-CustomNode-blue)](https://github.com/comfyanonymous/ComfyUI)
 
-[English](README-en.md) | **简体中文**
+[English](README-en.md) | **[简体中文](README.md)**
 
 QwenImageIntegratedKSampler
 
-这是一个集成化的ComfyUI Qwen-Image 生图的采样器节点，支持Z-Image，相比使用官方的K采样器，告别原版乱七八糟的连线，同时支持文生图和图生图生成，解决了官方节点生图偏移的问题，并且集成了提示词输入框、图片自动缩放、显存/内存自动自动清理、批量生图、自动保存等全面优化功能，妈妈再也不用担心我连线乱七八糟了~~~~
+This is an integrated ComfyUI Qwen-Image image generation sampler node,support Z-Image. Compared to using the official KSampler, it eliminates the messy wiring, supports both text-to-image and image-to-image generation, solves the offset issues of the official nodes, and integrates prompt input box, automatic image scaling, automatic memory/vRAM cleanup, batch generation, automatic saving and other comprehensive optimization features, so mom no longer has to worry about my messy wiring~~~~
 
-#### 如果这个项目对您有帮助，请点个 ⭐Star 吧，让我知道世界上还有人类在使用它！
+#### If this project helps you, please give it a ⭐Star — it lets me know there are humans out there using it!
 
-## 🏆 特色功能
+## 🏆 Features
 
-### 🎨 支持生成模式
-- **Z-Image**: 支持Z-Image模型
-- **文生图**: 从文本提示生成图像
-- **图生图**: 基于参考图生成、图片编辑，支持5张图像
+### 🎨 Supported Generation Modes
+- **Z-Image**: Support Z-Image Model
+- **Text-to-Image**: Generate images from text prompts
+- **Image-to-Image**: Generate based on reference images, image editing, supports up to 5 images
 
-### ⚡ 高级优化
-- **优化偏移问题**: 解决了官方节点生图偏移的问题，且能更好的遵从指令
-- **采样算法（AuraFlow）集成**: 集成了采样算法（AuraFlow）节点，无需另外连线
-- **CFGNorm集成**: 集成了CFGNorm节点，无需另外连线
+### ⚡ Advanced Optimizations
+- **Optimize Offset Issues**: Solves the offset issues of official nodes, and better follows instructions
+- **Integrated Sampling Algorithm (AuraFlow)**: Integrates Sampling Algorithm (AuraFlow) node, no additional wiring needed
+- **CFGNorm Integration**: Integrates CFGNorm node, no additional wiring needed
 
-### 🖼️ 图像处理
-- **提示词输入框集成**: 集成了提示词输入框，无需另外连线
-- **多张参考图像**: 支持最多5张参考图像进行条件生成
-- **自动图像缩放**: 在调整到目标尺寸的同时保持纵横比
-- **支持ControlNet控制**: 可额外连接[千问 ControlNet 集成加载器]进行姿态、深度等控制
+### 🖼️ Image Processing
+- **Integrated Prompt Input Box**: Integrates prompt input box, no additional wiring needed
+- **Multiple Reference Images**: Supports up to 5 reference images for conditional generation
+- **Automatic Image Scaling**: Maintains aspect ratio while resizing to target dimensions
 
-### 🔧 提高生产力
-- **批量生成**: 在单次操作中生成多张图像
-- **自动显存清理**: GPU/VRAM显存的自动清理选项
-- **自动内存清理**: RAM内存的自动清理选项
-- **自动保存结果**: 自动将生成的结果图像保存到指定文件夹
-- **完成声音通知**: 生成完成后播放音频提醒
+- **Support ControlNet Control**: Additional connection to [🐋 Qwen ControlNet Integrated Loader] for pose, depth and other controls
 
+### 🔧 Productivity Enhancement
+- **Batch Generation**: Generate multiple images in a single operation
+- **Automatic VRAM Cleanup**: Automatic cleanup options for GPU/VRAM memory
+- **Automatic RAM Cleanup**: Automatic cleanup options for RAM memory
+- **Automatic Save Results**: Automatically save generated result images to specified folder
+- **Completion Sound Notification**: Play audio reminder after generation completes
 
-## 🍧 对比展示 
-### 🔄 工作流复杂度对比
-- **❌ 未使用【千问图像集成采样器】的工作流（复杂繁琐，超多节点，超多连线）**
-![alt text](images/1-1.png)
-- **✅ 使用了【千问图像集成采样器】的工作流（极简，单节点搞定，几乎无连线）**
-![alt text](images/1-2.png)
+## 🍧 Comparison Display
+### 🔄 Workflow Complexity Comparison
+- **❌ Workflow without using [Qwen Image Integrated KSampler] (complicated, too many nodes, too many wires)**
+![alt text](images/1-1-en.png)
+- **✅ Workflow using [Qwen Image Integrated KSampler] (extremely simple, single node done, almost no wires)**
+![alt text](images/1-2-en.png)
 
-### 🖼️ 生成图像效果对比
-- **❌ 未使用【千问图像集成采样器】的工作流（明显偏移、缩放）**
+### 🖼️ Generated Image Effect Comparison
+- **❌ Workflow without using [Qwen Image Integrated KSampler] (obvious offset, scaling)**
 ![alt text](images/2-1.png)
-- **✅ 使用了【千问图像集成采样器】的工作流（完全无偏移、缩放）**
+- **✅ Workflow using [Qwen Image Integrated KSampler] (completely no offset, scaling)**
 ![alt text](images/2-2.png)
 
+## 📦 Installation Method
 
-## 📦 安装方法
+### Method 1: Via ComfyUI Manager (Recommended)
+1. Open ComfyUI Manager in the ComfyUI interface
+2. Search for "ComfyUI-Qwen-Image-Integrated-KSampler"
+3. Click Install
 
-### 方法1: 通过ComfyUI管理器（推荐）
-1. 在ComfyUI界面中打开ComfyUI管理器
-2. 搜索 "ComfyUI-Qwen-Image-Integrated-KSampler"
-3. 点击安装
-
-### 方法2: 手动安装
-1. 导航到您的ComfyUI自定义节点目录：
+### Method 2: Manual Installation
+1. Navigate to your ComfyUI custom nodes directory:
    ```bash
    cd /path/to/ComfyUI/custom_nodes
    ```
 
-2. 克隆仓库：
+2. Clone the repository:
    ```bash
    git clone https://github.com/luguoli/ComfyUI-Qwen-Image-Integrated-KSampler.git
-   或 Gitee 仓库：
+   or gitee repository:
    git clone https://gitee.com/luguoli/ComfyUI-Qwen-Image-Integrated-KSampler.git
    ```
 
-3. 安装依赖项：
+3. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-4. 重启ComfyUI
+4. Restart ComfyUI
 
-## 🚀 使用方法
+## 🚀 Usage Method
 
-### [工作流示例](workflow_example.json)
+### [Workflow Example](workflow_example.json)
 
+### Basic Text-to-Image Generation
 
-### 基础文生图生成
-
-1. 将"🐋 千问图像集成采样器"节点添加到工作流中
-2. 设置 `generation_mode` 为 "文生图"
-3. 连接必需输入：
-   - 模型 (🤖 Model)
+1. Add the "🐋 Qwen Image Integrated KSampler" node to the workflow
+2. Set `generation_mode` to "text-to-image"
+3. Connect required inputs:
+   - Model (🤖 Model)
    - CLIP (🟡 Clip)
    - VAE (🎨 Vae)
-4. 输入正向和负向提示词
-5. 设置宽度和高度（文生图必填）
-6. 配置采样参数（步数、CFG、采样器、调度器）
-7. 执行工作流
+4. Enter positive and negative prompts
+5. Set width and height (required for text-to-image)
+6. Configure sampling parameters (steps, CFG, sampler, scheduler)
+7. Execute the workflow
 
-### 图生图生成
+### Image-to-Image Generation
 
-1. 将节点添加到工作流中
-2. 设置 `generation_mode` 为 "图生图"
-3. 至少连接一张参考图像（🖼️ Image1）
-4. 可选添加最多4张其他参考图像
-5. 输入正向/负向提示词和指令
-6. 设置目标宽度/高度用于缩放（可选）
-7. 根据需要配置其他参数
-8. 执行工作流
+1. Add the node to the workflow
+2. Set `generation_mode` to "image-to-image"
+3. Connect at least one reference image (🖼️ Image1)
+4. Optionally add up to 4 other reference images
+5. Enter positive/negative prompts and instructions
+6. Set target width/height for scaling (optional)
+7. Configure other parameters as needed
+8. Execute the workflow
 
-### ControlNet 控制
+### ControlNet Control
 
-1. 添加[千问 ControlNet 集成加载器]节点，连线至[ControlNet 数据]
-2. 连接姿态、深度控制图
-3. 选择ControlNet模型，设置控制类型和强度
-4. 执行工作流
-![alt text](images/3.png)
+1. Add the [🐋 Qwen ControlNet Integrated Loader] node, connect to [📦 ControlNet Data]
+
+2. Connect pose, depth control images
+
+3. Select ControlNet model, set control type and strength
+
+4. Execute the workflow
+
+![alt text](images/3-en.png)
+
+### Advanced Features
+
+- **Memory Management**: Enable GPU/CPU cleanup options to improve resource efficiency
+- **Batch Processing**: Set batch_size > 1 for multiple image generation
+- **Auto-Save**: Specify output folder for automatic saving
+- **AuraFlow Tuning**: Adjust auraflow_shift to balance speed and quality
+- **CFG Enhancement**: Stabilizer for CFG
+
+## ⚠️ Notes
+
+### 📝 Usage Requirements
+- **Text-to-Image Mode**: Must set width (Width) and height (Height), these are required parameters
+- **Image-to-Image Mode**: Must provide at least one reference image (Image1), supports up to 5 reference images (Image1-Image5)
+
+### 🎛️ Parameter Setting Suggestions
+- **Batch Size**: Choose between 1-10, adjust according to GPU memory, recommend starting testing from 1
+- **Resolution (Width/Height)**: Must be multiples of 8, range 0-16384, recommend starting testing from lower resolutions (like 512x512)
+- **Sampling Steps**: Qwen models recommend 4-20 steps, too high may increase computation time but not necessarily improve quality
+- **CFG Value**: Range 0-100, default 1.0, recommend 1.0-7.0 range
+- **Denoise Strength**: Range 0-1, default 1.0, can lower appropriately in image-to-image mode
+- **AuraFlow Shift**: Range 0-100, default 3.0, used to balance generation speed and quality
+- **CFG Normalization Strength**: Range 0-100, default 1.0, stabilizer for CFG
+
+### 🔧 Image Processing
+- **Automatic Scaling**: Text-to-image must input width and height parameters, image-to-image fills in to auto-scale reference images while maintaining aspect ratio, setting either width or height to 0 disables scaling
+- **Reference Image Order**: Supports up to 5 reference images, processed in order Image1-Image5, Image1 is the main image
+- **Image Format**: Supports standard image input formats, automatically handles batch dimensions
+
+### 💾 Memory Management
+- **GPU Memory Cleanup**: Enable enable_clean_gpu_memory option, automatically clean VRAM before/after generation
+- **CPU Memory Cleanup**: Enable enable_clean_cpu_memory_after_finish, clean RAM after generation completes (including file cache, processes, dynamic libraries)
+- For continuous large-scale generation, it is recommended to always enable memory cleanup options to prevent memory overflow
+
+### 💾 Auto-Save
+- **Output Folder**: Set auto_save_output_folder to enable auto-save function, leave blank to disable, supports absolute and relative paths
+- **File Naming**: output_filename_prefix custom prefix, default "auto_save"
+- Save format is PNG, filename includes seed and batch number (e.g.: auto_save_123456_00000.png)
+
+### 🔊 Notification Function
+- **Sound Notification**: Only supported on Windows systems
+
+## 📝 Update Records
+### v1.0.6:
+- **Added Localization Script:** Starting from ComfyUI v0.3.68, Chinese language files became invalid. Added automatic localization script, double-click [自动汉化节点.bat] and restart ComfyUI, requires installing ComfyUI-DD-Translation plugin
 
 
-### 高级功能
-
-- **内存管理**: 启用GPU/CPU清理选项以提高资源效率
-- **批量处理**: 设置 batch_size > 1 进行多张图像生成
-- **自动保存**: 指定输出文件夹进行自动保存
-- **AuraFlow调优**: 调整 auraflow_shift 以平衡速度与质量
-- **CFG增强**: CFG 的稳定器
-
-## ⚠️ 注意事项
-
-### 📝 使用要求
-- **文生图模式**：必须设置宽度（Width）和高度（Height），这是必填参数
-- **图生图模式**：必须至少提供一张参考图像（Image1），最多支持5张参考图像（Image1-Image5）
-
-### 🎛️ 参数设置建议
-- **批量大小（Batch Size）**：1-10之间选择，根据GPU内存调整，建议从1开始测试
-- **分辨率（Width/Height）**：须为8的倍数，范围0-16384，建议从较低分辨率（如512x512）开始测试
-- **采样步数（Steps）**：千问模型推荐4-20步，过高可能增加计算时间但不一定提升质量
-- **CFG值**：0-100范围，默认1.0，推荐1.0-7.0范围
-- **降噪强度（Denoise）**：0-1范围，默认1.0，图生图模式可适当降低
-- **AuraFlow Shift**：0-100范围，默认3.0，用于平衡生成速度与质量
-- **CFG规范化强度**：0-100范围，默认1.0，CFG 的稳定器
-
-### 🔧 图像处理
-- **自动缩放**：文生图必须输入宽高参数，图生图填写自动缩放参考图像保持纵横比，宽高任意填0则不缩放
-- **参考图像顺序**：最多支持5张参考图像，按Image1-Image5优先级处理，Image1为主图
-- **图像格式**：支持标准图像输入格式，自动处理批次维度
-
-### 💾 内存管理
-- **GPU内存清理**：启用enable_clean_gpu_memory选项，在生成前/后自动清理VRAM
-- **CPU内存清理**：启用enable_clean_cpu_memory_after_finish，生成结束后清理RAM（包含文件缓存、进程、动态库）
-- 连续大量生成时建议始终启用内存清理选项以防止内存溢出
-
-### 💾 自动保存
-- **输出文件夹**：设置auto_save_output_folder启用自动保存功能，置空则不自动保存，支持绝对路径和相对路径
-- **文件命名**：output_filename_prefix自定义前缀，默认"auto_save"
-- 保存格式为PNG，文件名包含种子和批次编号（如：auto_save_123456_00000.png）
-
-### 🔊 通知功能
-- **声音通知**：仅在Windows系统支持
-
-### 📞 需要特别定制请联系 📞 
-- 作者：@luguoli（墙上的向日葵）
-- 作者邮箱：luguoli@vip.qq.com
-
-
-## 📝 更新记录
-### v1.0.6：
-- **增加汉化脚本：** ComfyUI从v0.3.68开始中文语言文件失效，增加自动汉化脚本，双击执行【自动汉化节点.bat】后重启ComfyUI即可，需要安装ComfyUI-DD-Translation插件
+## 📞 Contact for Special Customization 📞
+- Author: @luguoli（墙上的向日葵）
+- Author Email: luguoli@vip.qq.com
 
 
 ---
 
-**用❤️为ComfyUI社区制作**
+**Made with ❤️ for the ComfyUI community**
