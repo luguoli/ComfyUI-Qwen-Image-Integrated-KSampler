@@ -3,7 +3,7 @@
 [![GitHub](https://img.shields.io/badge/GitHub-luguoli-orange)](https://github.com/luguoli)
 [![ComfyUI](https://img.shields.io/badge/ComfyUI-CustomNode-blue)](https://github.com/comfyanonymous/ComfyUI)
 
-[English](README-en.md) | **[简体中文](README.md)**
+[English](README-en.md) | **[简体中文](README-zh.md)**
 
 QwenImageIntegratedKSampler
 
