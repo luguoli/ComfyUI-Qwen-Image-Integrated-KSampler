@@ -47,7 +47,8 @@
         "description": "🐋 千问 ControlNet 集成加载器 - Github: https://github.com/luguoli - 整合 加载ControlNet模型 和设置UnionControlNet类型，简化 ControlNet 使用 - 📧Email: luguoli﹫vip.qq.com",
         "inputs": {
             "image": "🖼️ 控制图像",
-            "mask": "🎭 遮罩（可选）"
+            "mask": "🎭 遮罩（可选）",
+            "controlnet_data": "🌿 ControlNet 数据（可选）"
         },
         "widgets": {
             "control_net_name": "🔧 ControlNet 模型",

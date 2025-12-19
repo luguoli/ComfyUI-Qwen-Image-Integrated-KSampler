@@ -172,6 +172,10 @@
         "name": "🎭 遮罩（可选）",
         "tooltip": "🎭 遮罩（可选） - Inpainting 遮罩，用于 ControlNet 区域控制"
       },
+      "controlnet_data": {
+        "name": "🌿 ControlNet 数据（可选）",
+        "tooltip": "🌿 ControlNet 数据（可选） - 输入 ControlNet 集成加载器输出的数据包，直接应用 ControlNet 控制"
+      },
       "control_net_name": {
         "name": "🔧 ControlNet 模型",
         "tooltip": "🔧 ControlNet 模型 - 选择要使用的 ControlNet 模型"

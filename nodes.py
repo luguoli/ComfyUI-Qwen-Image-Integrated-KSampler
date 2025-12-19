@@ -173,74 +173,68 @@ class QwenImageIntegratedKSampler:
                 raise Exception("文生图必须输入宽高。text-to-image width and height must be entered.")
 
         # Apply ControlNet if provided
-        if controlnet_data is not None:
+        if controlnet_data is not None and len(controlnet_data) > 0:
             try:
-                control_net = controlnet_data["control_net"]
-                control_type = controlnet_data["control_type"]
-                control_image = controlnet_data["image"]
-                control_mask = controlnet_data["mask"]
-                control_strength = controlnet_data["strength"]
-                control_start_percent = controlnet_data["start_percent"]
-                control_end_percent = controlnet_data["end_percent"]
+                for c_data in controlnet_data:
+                    control_net = c_data["control_net"]
+                    control_type = c_data["control_type"]
+                    control_image = c_data["image"]
+                    control_mask = c_data["mask"]
+                    control_strength = c_data["strength"]
+                    control_start_percent = c_data["start_percent"]
+                    control_end_percent = c_data["end_percent"]
 
-                print(f"🎨 应用ControlNet/Applying ControlNet with strength: {control_strength}")
+                    print(f"🎨 应用ControlNet {control_type}/Applying ControlNet {control_type} with strength: {control_strength}")
 
-                if control_strength > 0:
+                    if control_strength > 0:
 
-                    if control_image is None:
-                        raise Exception("使用ControlNet必须传入控制图像。ControlNet must enter control image.")
-                    
-                    extra_concat=[]
+                        # 图生图-局部重绘 时使用缩放主图
+                        if generation_mode == "图生图 image-to-image":
+                            if control_type.lower() == "repaint" or control_type.lower() == "inpaint" or control_type.lower() == "inpainting" or control_type == "重绘" or control_type == "局部重绘":
+                                
+                                if width > 0 and height > 0:
+                                    scaled_control_image, scaled_control_mask, _, _, _ = image_scale_by_aspect_ratio('original', 1, 1, 'letterbox', 'lanczos', '8', 'max_size', (width, height), '#000000', control_image, control_mask)
+                                    control_image = scaled_control_image
+                                    control_mask = scaled_control_mask
 
-                    if control_type.lower() == "repaint" or control_type.lower() == "inpaint" or control_type.lower() == "inpainting" or control_type == "重绘" or control_type == "局部重绘":
-                        if control_mask is None:
-                            raise Exception("使用局部重绘ControlNet必须传入控制遮罩。ControlNet repaint must enter control mask.")
-                    
-                    # 图生图-局部重绘 时使用缩放主图
-                    if generation_mode == "图生图 image-to-image":
-                        if control_type.lower() == "repaint" or control_type.lower() == "inpaint" or control_type.lower() == "inpainting" or control_type == "重绘" or control_type == "局部重绘":
-                            
-                            if width > 0 and height > 0:
-                                scaled_control_image, scaled_control_mask, _, _, _ = image_scale_by_aspect_ratio('original', 1, 1, 'letterbox', 'lanczos', '8', 'max_size', (width, height), '#000000', control_image, control_mask)
-                                control_image = scaled_control_image
-                                control_mask = scaled_control_mask
+                        extra_concat=[]
 
-                    if control_net.concat_mask and control_mask is not None:
-                        control_mask = 1.0 - control_mask.reshape((-1, 1, control_mask.shape[-2], control_mask.shape[-1]))
-                        control_mask_apply = comfy.utils.common_upscale(control_mask, control_image.shape[2], control_image.shape[1], "bilinear", "center").round()
-                        control_image = control_image * control_mask_apply.movedim(1, -1).repeat(1, 1, 1, control_image.shape[3])
-                        extra_concat = [control_mask]
-                        print("✅ ControlNet 应用遮罩/ControlNet applied mask")
+                        if control_net.concat_mask and control_mask is not None:
+                            control_mask = 1.0 - control_mask.reshape((-1, 1, control_mask.shape[-2], control_mask.shape[-1]))
+                            control_mask_apply = comfy.utils.common_upscale(control_mask, control_image.shape[2], control_image.shape[1], "bilinear", "center").round()
+                            control_image = control_image * control_mask_apply.movedim(1, -1).repeat(1, 1, 1, control_image.shape[3])
+                            extra_concat = [control_mask]
+                            print(f"✅ ControlNet {control_type}应用遮罩/ControlNet {control_type} applied mask")
 
-                    control_hint = control_image.movedim(-1,1)
-                    cnets = {}
+                        control_hint = control_image.movedim(-1,1)
+                        cnets = {}
 
-                    out = []
-                    for conditioning in [positive, negative]:
-                        c = []
-                        for t in conditioning:
-                            d = t[1].copy()
+                        out = []
+                        for conditioning in [positive, negative]:
+                            c = []
+                            for t in conditioning:
+                                d = t[1].copy()
 
-                            prev_cnet = d.get('control', None)
-                            if prev_cnet in cnets:
-                                c_net = cnets[prev_cnet]
-                            else:
-                                c_net = control_net.copy().set_cond_hint(control_hint, control_strength, (control_start_percent, control_end_percent), vae=vae, extra_concat=extra_concat)
-                                c_net.set_previous_controlnet(prev_cnet)
-                                cnets[prev_cnet] = c_net
+                                prev_cnet = d.get('control', None)
+                                if prev_cnet in cnets:
+                                    c_net = cnets[prev_cnet]
+                                else:
+                                    c_net = control_net.copy().set_cond_hint(control_hint, control_strength, (control_start_percent, control_end_percent), vae=vae, extra_concat=extra_concat)
+                                    c_net.set_previous_controlnet(prev_cnet)
+                                    cnets[prev_cnet] = c_net
 
-                            d['control'] = c_net
-                            d['control_apply_to_uncond'] = False
-                            n = [t[0], d]
-                            c.append(n)
-                        out.append(c)
+                                d['control'] = c_net
+                                d['control_apply_to_uncond'] = False
+                                n = [t[0], d]
+                                c.append(n)
+                            out.append(c)
 
-                    positive = out[0]
-                    negative = out[1]
-                    
-                    print("✅ ControlNet 应用成功/ControlNet applied successfully")
-                else:
-                    print("⚠️ ControlNet强度设置为0，不应用ControlNet/No ControlNet applied")
+                        positive = out[0]
+                        negative = out[1]
+                        
+                        print(f"✅ ControlNet {control_type}应用成功/ControlNet {control_type} applied successfully")
+                    else:
+                        print(f"⚠️ ControlNet {control_type}强度设置为0，不应用ControlNet/{control_type} No ControlNet applied")
             except Exception as e:
                 raise Exception(f"⚠️ [ControlNet] ControlNet 应用失败 / Cannot apply ControlNet: {e}")
 
@@ -396,6 +390,7 @@ class QwenImageControlNetIntegratedLoader:
             },
             "optional": {
                 "mask": ("MASK", {"tooltip": "🎭 遮罩（可选） - Inpainting 遮罩，用于 ControlNet 区域控制"}),
+                "controlnet_data": ("CONTROL_NET_DATA", {"tooltip": "🌿 ControlNet 数据（可选） - 输入 ControlNet 集成加载器输出的数据包，直接应用 ControlNet 控制"}),
             }
         }
 
@@ -405,7 +400,15 @@ class QwenImageControlNetIntegratedLoader:
     CATEGORY = "conditioning/controlnet"
     DESCRIPTION = "🐋 千问 ControlNet 集成加载器 - 需要 ControlNet 时使用/🐋 Qwen ControlNet Integrated Loader"
 
-    def load_controlnet(self, image, control_net_name, control_type, strength, start_percent, end_percent, mask=None):
+    def load_controlnet(self, image, control_net_name, control_type, strength, start_percent, end_percent, mask=None, controlnet_data=None):
+
+        if strength > 0:
+            if image is None:
+                raise Exception("ERROR: 使用ControlNet必须传入控制图像。 / ControlNet must enter control image.")
+            
+        if control_type.lower() == "repaint" or control_type.lower() == "inpaint" or control_type.lower() == "inpainting" or control_type == "重绘" or control_type == "局部重绘":
+            if mask is None:
+                raise Exception("ERROR: 使用局部重绘ControlNet必须传入控制遮罩。 / ControlNet repaint must enter control mask.")
 
         # 加载 ControlNet
         controlnet = comfy.controlnet.load_controlnet(folder_paths.get_full_path_or_raise("controlnet", control_net_name))
@@ -421,6 +424,11 @@ class QwenImageControlNetIntegratedLoader:
         else:
             controlnet.set_extra_arg("control_type", [])
 
+        if controlnet_data is not None and len(controlnet_data) > 0:
+            control_net_data_list = controlnet_data
+        else:
+            control_net_data_list = []
+
         # 创建数据对象
         control_net_data = {
             "control_net": controlnet,
@@ -432,7 +440,9 @@ class QwenImageControlNetIntegratedLoader:
             "end_percent": end_percent
         }
 
-        return (control_net_data,)
+        control_net_data_list.append(control_net_data)
+
+        return (control_net_data_list,)
 
 NODE_CLASS_MAPPINGS = {
     "QwenImageIntegratedKSampler": QwenImageIntegratedKSampler,

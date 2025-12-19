@@ -172,6 +172,10 @@
         "name": "🎭 Mask (Optional)",
         "tooltip": "🎭 Mask (Optional) - Inpainting mask for ControlNet regional control"
       },
+      "controlnet_data": {
+        "name": "🌿 ControlNet Data (Optional)",
+        "tooltip": "🌿 ControlNet Data (Optional) - Input ControlNet integrated loader output data package to directly apply ControlNet control"
+      },
       "control_net_name": {
         "name": "🔧 ControlNet Model",
         "tooltip": "🔧 ControlNet Model - Select the ControlNet model to use"
